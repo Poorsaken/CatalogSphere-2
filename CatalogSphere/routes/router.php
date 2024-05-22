@@ -20,8 +20,19 @@
 
          function ToMain() {
             // Redirect to your PHP file
-            window.location.href = 'index.php';
+            window.location.href = 'welcome.php';
         }
+         function ToSignup() {
+            // Redirect to your PHP file
+            window.location.href = 'signup.php';
+        }
+         function ToLogout() {
+            // Redirect to your PHP file
+            window.location.href = 'logout.php';
+        }
+
+
+    
     </script>
 
 </body>

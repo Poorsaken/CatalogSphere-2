@@ -11,7 +11,8 @@
 
 <?php 
 
-include('./routes/router.php')
+include('./routes/router.php');
+
 ?>
 
 <div class="parents">
@@ -38,6 +39,24 @@ include('./routes/router.php')
     <div class="navlinks_del">
         <a>Delete Products</a>
     </div>
+
+        <div class="div">
+
+
+        </div>
+<div class="logout" onclick="ToLogout()">
+    <div class="logout_text">
+        <a class="logoutdiv">Logout</a>
+    </div>
+    <div class="logout_icon">
+        <img src="../img/Vector.png" alt="">
+    </div>
+</div>
+
+      
+
+
+
 </div>
 
 </body>
