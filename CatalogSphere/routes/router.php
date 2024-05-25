@@ -24,7 +24,11 @@
         }
          function ToSignup() {
             // Redirect to your PHP file
-            window.location.href = 'signup.php';
+            window.location.href = 'signupform.php';
+        }
+         function ToLogin() {
+            // Redirect to your PHP file
+            window.location.href = 'loginform.php';
         }
          function ToLogout() {
             // Redirect to your PHP file

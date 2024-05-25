@@ -23,11 +23,14 @@
       $DB = new Database(); //instantiation
       $DB->connectDB();
       $profile = new Crud();
+
       if (isset($_REQUEST['btn'])) {
         $profile->InsertProduct($_REQUEST);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+      
+
       }
+
+
     ?>
     <form action="" method="POST" id="myForm">
       <div class="parent">
@@ -68,15 +71,12 @@
             <input type="text" id="resolution" name="resolution" required><br><br>
           </div>
           <div class="right-container">
-            <label for="refresh_rate">Refresh Rate:</label><br/>
+            <label for="refreshrate">Refresh Rate:</label><br/>
             <input type="text" id="refresh_rate" name="refresh_rate" required><br><br>
           </div>
         </div>
-        <div class="parent-flex">
-          <div class="left-container">
-            <label for="Capacity">Capacity:</label><br/>
-            <input type="text" id="capacity" name="capacity" required><br><br>
-          </div>
+        <div class="parent-flex asdsa">
+         
           <div class="right-container">
             <label for="connectivity">Connectivity:</label><br/>
             <input type="text" id="connectivity" name="connectivity" required><br><br>
@@ -120,7 +120,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('btn').addEventListener('click', function() {
-    document.getElementById('myForm').reset();
+    
   });
 });
 </script>

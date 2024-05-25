@@ -28,6 +28,8 @@ class Crud{
     $storage = $req['storage'];
     $display_size = $req['display_size'];
     $resolution = $req['resolution'];
+    $refresh_rate = $req['refresh_rate']; // Make sure to include this field
+    $connectivity = $req['connectivity']; // Make sure to include this field
     $usb = $req['usb'];
     $battery = $req['battery'];
     $os = $req['os'];
@@ -35,8 +37,13 @@ class Crud{
     $color = $req['color'];
     $product_desc = $req['product_desc'];
 
+    // Debugging output to check if values are being received
+    // echo "<pre>";
+    // print_r($req);
+    // echo "</pre>";
+
     try {
-        $sql = "INSERT INTO `tbl_products`
+        $sql = "INSERT INTO tbl_products
          (brand,
          model,
          chipset,
@@ -44,6 +51,8 @@ class Crud{
          storage,
          display_size,
          resolution,
+         refresh_rate,
+         connectivity,
          usb,
          battery,
          os,
@@ -58,6 +67,8 @@ class Crud{
           '$storage',
           '$display_size',
           '$resolution',
+          '$refresh_rate',
+          '$connectivity',
           '$usb',
           '$battery',
           '$os',     
@@ -66,14 +77,11 @@ class Crud{
           '$product_desc')";
         
         $con->exec($sql);
+             echo "<script>alert('New record created successfully');</script>";
     }catch(PDOException $e){
-
-        echo $sql . "<br>" . $e->getMessage();
+        echo $sql . "<br>" . $e->getMessage(); // Display SQL error message
     }
-    }
-
-
-
+}
 
 
     
@@ -82,5 +90,35 @@ class Crud{
 
 
     }
+    
+
+  function SignUp($req) {
+    global $con;
+
+    $username = $req['username'];
+    $password = $req['password'];
+
+    try {
+        // Prepare SQL and bind parameters
+        $sql = "INSERT INTO `tbl_login` (username, password) VALUES (:username, :password)";
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        
+        // Execute the query
+        $stmt->execute();
+
+
+        echo "<script>alert('Inserted Successfuly')</script>";
+           header("Location: signupform.php"); // Replace "success.php" with the URL of the success page
+    exit(); // Ensure no further code is executed after redirection
+        
+       
+    } catch(PDOException $e) {
+        // Output a JavaScript snippet to trigger an alert for error
+        echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
     }
+}
+
+}
 ?>

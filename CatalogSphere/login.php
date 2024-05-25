@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    asdasd
+ 
 </body>
 </html>
 
@@ -51,7 +51,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         if ($row['username'] === $username && $row['password'] === $password) { // Replace with password_verify if password is hashed
             echo "Logged in!";
 
-            $_SESSION['username'] = $row['username'];
+            $_SESSION['username'] = $row['username'];       
             $_SESSION['name'] = $row['name'];
             $_SESSION['id'] = $row['id'];
             header("Location: welcome.php");

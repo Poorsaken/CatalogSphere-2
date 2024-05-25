@@ -3,6 +3,21 @@
 
 session_start();
 include('./routes/router.php');
+include ('classes/Crud.php');
+      include('./Classes/Database.php');
+global $DB;
+global $con;
+
+      $Signup = new Crud();
+      $DB = new Database(); //instantiation
+      $DB->connectDB();
+      if (isset($_REQUEST['btn'])) {
+        $Signup->SignUp($_REQUEST);
+        exit();
+      
+
+      }
+
 ?>
 
 <!DOCTYPE html>
@@ -10,25 +25,31 @@ include('./routes/router.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Signup</title>
     <link rel="stylesheet" href="./css/LoginForm.css"/>
 </head>
 <body>
+
+
     <div class="parent">
 
-   <form action ="./login.php" method="post">
+    
+   <form action ="" method="POST">
+
     <div class="logo">
-     <h1>Welcome.</h1>
+                     <h1>Create your Account.</h1>
 
                 </div>
             <div class="wrapper">
   
             <div class="div">
-                
+               
             
                     <?php if (isset($_GET['error'])) { ?>
                     <p class="error"> <?php echo $_GET['error']; ?></p>
                 <?php }?>
+
+                
 
                 <label>Username</label><br/>
                 <input type = "text" name="username" placeholder="username"><br/>
@@ -38,9 +59,9 @@ include('./routes/router.php');
 
                   
 
-                <button type="submit" class="login-btn">Login</button><br/>
+                  <button class="login-btn" name="btn" id="btn">SUBMIT</button><br/>
                   
-                <label>Dont have an Account? <a onclick ="ToSignup()" class="signup">Sign Up here.</a></label>
+                <label>Already have an Account? <a onclick ="ToLogin()" class="signup">Login here.</a></label>
         
 
             </div>
@@ -50,6 +71,15 @@ include('./routes/router.php');
  
     </form>
     </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('myForm').addEventListener('submit', function() {
+        // Reset form fields after submission
+        document.getElementById('myForm').reset();
+    });
+});
+</script>
  
 </body>
 </html>

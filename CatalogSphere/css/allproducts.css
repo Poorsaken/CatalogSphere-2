@@ -1,5 +1,13 @@
 /* gago ko */
         /* CSS for the card layout */
+        
+        *{
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+           
+        }
+        
         .card {
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -21,4 +29,24 @@
         }
 
 
-        /* HI CHRIS ART JAL NI */
+
+        .div_right{
+
+            font-size: 14px;
+            width: 85%;
+     
+        }
+
+        .products-container{
+
+            display: flex;
+        }
+
+        .left_container{
+
+
+            width: 16%;
+            height: 500px;
+   
+        }
+

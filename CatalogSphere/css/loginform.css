@@ -1,92 +1,103 @@
-*{
-
-
-    box-sizing: border-box;
-    margin: 0%;
-    padding: 0%;
-    font-family: 'Poppins';
-   
+* {
+  box-sizing: border-box;
+  margin: 0%;
+  padding: 0%;
+  font-family: "Poppins";
 }
 
-body{
-
-     background-color: #FAF8FF;
+body {
+  background-color: #faf8ff;
 }
 
 .parent {
+  display: flex;
+  justify-content: center;
 
-    display: flex;
-    justify-content: center;
-
-
-    height: 900px;
-    margin-top: 5%;
+  height: 900px;
+  margin-top: 5%;
 }
 
 
-.wrapper{
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
 }
 
-.logo{
-
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15%;
+.signupform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
 }
 
-.wrapper h2{
-
-
-    font-size: 45px;
+.signupform input {
+  width: 413px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 5%;
+  border: none;
+  outline: 1px solid rgb(226, 226, 226);
+  margin: 2% 0% 2% 0%;
 }
 
-.wrapper input{
 
-    width: 413px;
-    height: 40px;
-    border-radius: 5px;
-    padding: 5%;
-    border: none;
-     outline: 1px solid rgb(226, 226, 226);
-     margin: 2% 0% 2% 0%;
+
+.signupform input:focus {
+  outline: 2px solid black;
 }
 
-.wrapper input:focus{
-    outline: 2px solid black;
-
-}
-
-.login-btn{
-
-        width: 413px;
-        cursor: pointer;
-        height: 40px;
-        border: none;
-        background-color: #9669E0;
-        border-radius: 10px;
-        color: #FAF8FF;
-        font-size: 16PX;
-        margin-top: 5%;
-        margin-bottom: 5%;
-}
-
-.login-btn:focus{
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10%;
+  width: 500px;
+  height: 120px;
 
 
 }
 
-a{
 
-    cursor: pointer;
+
+
+
+
+.wrapper input {
+  width: 413px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 5%;
+  border: none;
+  outline: 1px solid rgb(226, 226, 226);
+  margin: 2% 0% 2% 0%;
 }
 
-.signup{
+.wrapper input:focus {
+  outline: 2px solid black;
+}
 
-    color: #9669E0;
+.login-btn {
+  width: 413px;
+  cursor: pointer;
+  height: 40px;
+  border: none;
+  background-color: #9669e0;
+  border-radius: 10px;
+  color: #faf8ff;
+  font-size: 16px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.login-btn:focus {
+}
+
+a {
+  cursor: pointer;
+}
+
+.signup {
+  color: #9669e0;
 }
