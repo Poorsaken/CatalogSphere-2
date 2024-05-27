@@ -3,6 +3,7 @@
 session_start();
 include('./routes/router.php');
 include('./navigation/navigation.php');
+
         
 if(isset($_SESSION['id']) && isset($_SESSION['username'])){
 ?>

@@ -37,7 +37,7 @@ include('./routes/router.php');
         <a >Update Products</a>
     </div>
     <div class="navlinks_del">
-        <a>Delete Products</a>
+        <a onclick="gotoDeleteProducts()">Delete Products</a>
     </div>
 
         <div class="div">

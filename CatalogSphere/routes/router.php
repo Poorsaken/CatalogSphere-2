@@ -35,6 +35,11 @@
             window.location.href = 'logout.php';
         }
 
+        function gotoDeleteProducts() {
+
+            window.location.href = 'delete.php';
+        }
+
 
     
     </script>
