@@ -39,6 +39,10 @@
 
             window.location.href = 'delete.php';
         }
+        function ViewDeletedProducts() {
+
+            window.location.href = 'deletedproducts.php';
+        }
 
 
     

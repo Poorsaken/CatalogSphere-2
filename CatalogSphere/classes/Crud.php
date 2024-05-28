@@ -19,7 +19,24 @@ class Crud{
 }
 
 
+function GetAllDeletedProducts(){
+
+    global $con;
+    try {
+
+        $sql= "SELECT * FROM `tbl_deletedproducts` ORDER BY id";
+        $stmt = $con ->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }catch (PDOException $e){
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+
     function InsertProduct($req){
+    
     global $con;
     $brand = $req['brand'];
     $model = $req['model'];
@@ -90,6 +107,89 @@ class Crud{
 
 
     }
+
+function RemoveRowFromTableById($req){
+    global $con;
+
+    try {
+        // Construct DELETE SQL query to delete the record from the original table by ID
+        $sql = "DELETE FROM `tbl_products` WHERE id = :id";
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    } catch(PDOException $e) {
+        echo $sql . "<br>" . $e->getMessage(); // Display SQL error message
+    }
+}
+
+
+
+// Function to delete products
+  function MoveToDeletedProducts($req){
+    
+    global $con;
+    $brand = $req['brand'];
+    $model = $req['model'];
+    $chipset = $req['chipset'];
+    $ram = $req['ram'];
+    $storage = $req['storage'];
+    $display_size = $req['display_size'];
+    $resolution = $req['resolution'];   
+    $refresh_rate = $req['refresh_rate']; // Make sure to include this field
+    $connectivity = $req['connectivity']; // Make sure to include this field
+    $usb = $req['usb'];
+    $battery = $req['battery'];
+    $os = $req['os'];
+    $price = $req['price'];
+    $color = $req['color'];
+    $product_desc = $req['product_desc'];
+
+    // Debugging output to check if values are being received
+    // echo "<pre>";
+    // print_r($req);
+    // echo "</pre>";
+
+    try {
+        $sql = "INSERT INTO tbl_deletedproducts
+         (brand,
+         model,
+         chipset,
+         ram,
+         storage,
+         display_size,
+         resolution,
+         refresh_rate,
+         connectivity,
+         usb,
+         battery,
+         os,
+         price,
+         color,
+         product_desc)
+          VALUES 
+          ('$brand',
+          '$model',
+          '$chipset',
+          '$ram',
+          '$storage',
+          '$display_size',
+          '$resolution',
+          '$refresh_rate',
+          '$connectivity',
+          '$usb',
+          '$battery',
+          '$os',     
+          '$price',
+          '$color',
+          '$product_desc')";
+        
+        $con->exec($sql);
+         
+    }catch(PDOException $e){
+        echo $sql . "<br>" . $e->getMessage(); // Display SQL error message
+    }
+}
+
     
 
   function SignUp($req) {
@@ -119,6 +219,7 @@ class Crud{
         echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
     }
 }
-
 }
+
+
 ?>

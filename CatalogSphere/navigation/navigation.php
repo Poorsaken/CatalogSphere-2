@@ -28,7 +28,7 @@ include('./routes/router.php');
         <a onclick="ViewProducts()">All Products</a>
     </div>
     <div class="navlinks">
-        <a onclick="">Deleted Products</a>
+        <a onclick="ViewDeletedProducts()">Deleted Products</a>
     </div>
     <div class="navlinks_add">
         <a onclick="gotoAddProducts()">Add Products</a>

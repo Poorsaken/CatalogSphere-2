@@ -60,7 +60,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
                     // Create an instance of your class
                     $obj = new Crud();
                     // Call the function to get all products
-                    $products = $obj->GetAllProducts();
+                    $products = $obj->GetAllDeletedProducts();
                     // Display the products
                     foreach ($products as $index => $product) {
                         $rowStyle = $index % 2 == 0 ? 'background-color: #f9f9f9;' : '';

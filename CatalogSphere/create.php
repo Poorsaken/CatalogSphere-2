@@ -16,6 +16,16 @@
   </div>
   <div class="right">
     <?php
+   session_start();
+
+
+    // Check if user is logged in
+    if (!isset($_SESSION['username'])) {
+        // If not, redirect to login page
+        header("Location: loginform.php");
+        exit();
+    }
+
       include('classes/Crud.php');
       include('./Classes/Database.php');
       global $DB;

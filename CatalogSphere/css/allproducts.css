@@ -42,11 +42,18 @@
             display: flex;
         }
 
-        .left_container{
+        .div_right{
 
 
-            width: 16%;
+            width: auto;
             height: 500px;
+       
    
         }
+        
+        .left-container{
 
+
+            width: 550px;
+               height: 500px;
+        }
