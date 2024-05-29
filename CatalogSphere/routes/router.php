@@ -44,6 +44,11 @@
             window.location.href = 'deletedproducts.php';
         }
 
+        function ToUpdateProducts(){
+
+            window.location.href = 'updateproducts.php';
+        }
+
 
     
     </script>
