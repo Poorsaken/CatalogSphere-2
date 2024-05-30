@@ -1,16 +1,3 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
- 
-</body>
-</html>
-
 <?php 
 session_start();
 include('./classes/database.php');
@@ -27,15 +14,14 @@ function validate($data) {
 }
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
-
     $username = validate($_POST['username']);
     $password = validate($_POST['password']);
 
     if (empty($username)) {
-        header("Location: loginform.php?error=username is required!");
+        header("Location: loginform.php?error=Username is required!");
         exit();
     } elseif (empty($password)) {
-        header("Location: loginform.php?error=password is required!");
+        header("Location: loginform.php?error=Password is required!");
         exit();
     }
 
@@ -47,8 +33,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
     if ($stmt->rowCount() === 1) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        // Assuming passwords are stored hashed, verify the password
-        if ($row['username'] === $username && $row['password'] === $password) { // Replace with password_verify if password is hashed
+        // Verify the password if it is hashed
+        if ($row['username'] === $username && password_verify($password, $row['password'])) {
             echo "Logged in!";
 
             $_SESSION['username'] = $row['username'];       
@@ -56,19 +42,14 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION['id'] = $row['id'];
             header("Location: welcome.php");
             exit();
-
-
         } else {
-            header("Location: index.php?error=Incorrect usernamae or password");
+            header("Location: loginform.php?error=Incorrect username or password");
             exit();
         }
     } else {
-        header("Location: loginform.php?error=Incorrect usrname or password");
+        header("Location: loginform.php?error=Incorrect username or password");
         exit();
     }
-
-
-
 } else {
     header("Location: loginform.php");
     exit();

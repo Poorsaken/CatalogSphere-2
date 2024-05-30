@@ -19,6 +19,22 @@ class Crud{
 }
 
 
+function GetProductById($product_id){
+    global $con;
+    try {
+        $sql = "SELECT * FROM `tbl_products` WHERE id = :product_id";
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':product_id', $product_id);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+
+
 function GetAllDeletedProducts(){
 
     global $con;
@@ -214,12 +230,39 @@ function updateProfile($product_id, $brand, $model, $chipset, $ram, $storage, $d
 }
 
 
-    
-    function UpdateProduct($req){
 
+function UpdateProduct($id, $brand, $model, $chipset, $ram, $storage, $display_size, $resolution, $refresh_rate, $connectivity, $usb, $battery, $os, $price, $color, $description){
+    global $con;
+    try {
+        $sql = "UPDATE `tbl_products` SET brand = :brand, model = :model, chipset = :chipset, ram = :ram, storage = :storage, display_size = :display_size, resolution = :resolution, refresh_rate = :refresh_rate, connectivity = :connectivity, usb = :usb, battery = :battery, os = :os, price = :price, color = :color, product_desc = :description WHERE id = :id";
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':brand', $brand);
+        $stmt->bindParam(':model', $model);
+        $stmt->bindParam(':chipset', $chipset);
+        $stmt->bindParam(':ram', $ram);
+        $stmt->bindParam(':storage', $storage);
+        $stmt->bindParam(':display_size', $display_size);
+        $stmt->bindParam(':resolution', $resolution);
+        $stmt->bindParam(':refresh_rate', $refresh_rate);
+        $stmt->bindParam(':connectivity', $connectivity);
+        $stmt->bindParam(':usb', $usb);
+        $stmt->bindParam(':battery', $battery);
+        $stmt->bindParam(':os', $os);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':color', $color);
+        $stmt->bindParam(':description', $description);
+        $stmt->execute();
 
-
+        return true; // Return true if the update was successful
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false; // Return false if there was an error
     }
+}
+
+    
+   
 
 function RemoveRowFromTableById($req){
     global $con;
@@ -274,6 +317,9 @@ function RemoveRowFromTableById($req){
 
     $username = $req['username'];
     $password = $req['password'];
+
+ $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
 
     try {
         // Prepare SQL and bind parameters

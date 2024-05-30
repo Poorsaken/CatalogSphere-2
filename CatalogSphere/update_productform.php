@@ -1,94 +1,102 @@
 <?php
-// Include necessary files
-include('./classes/Crud.php');
-include('./classes/database.php');
+session_start();
+include('./routes/router.php');
 
-// Create an instance of the Crud class
-$Profile = new Crud();
+if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
+    if(isset($_POST['update_product_id'])) {
+        $product_id = $_POST['update_product_id'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
-    // Collect form data
-    $id = $_POST['update_product_id']; // Retrieve product ID from hidden input
-    $brand = $_POST['brand'];
-    $model = $_POST['model'];
-    $chipset = $_POST['chipset'];
-    $ram = $_POST['ram'];
-    $storage = $_POST['storage'];
-    $display_size = $_POST['display_size'];
-    $resolution = $_POST['resolution'];
-    $refresh_rate = $_POST['refresh_rate'];
-    $connectivity = $_POST['connectivity'];
-    $usb = $_POST['usb'];
-    $battery = $_POST['battery'];
-    $os = $_POST['os'];
-    $price = $_POST['price'];
-    $color = $_POST['color'];
-    $description = $_POST['description'];
+        include('./classes/Crud.php');
+        include('./Classes/Database.php');
 
-    $success = $Profile->updateProfile($id, $brand, $model, $chipset, $ram, $storage, $display_size, $resolution, $refresh_rate, $connectivity, $usb, $battery, $os, $price, $color, $description);
+        $DB = new Database();
+        $DB->connectDB();
 
-    if ($success) {
-        echo "Record updated successfully";
+        $obj = new Crud();
+        $product = $obj->GetProductById($product_id);
+
+        // Now $product variable contains the details of the selected product
+        // You can use these details to populate the form fields
     } else {
-        echo "Failed to update record";
+        // Handle the case where update_product_id is not set
     }
-}
-
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $row = $Profile->getProfileById($id);
-      if ($row) {
-        // Display the fetched record
-        echo "ID: " . $row['brand'] . "<br>";
-        echo "Name: " . $row['model'] . "<br>";
-        echo "Address: " . $row['chipset'] . "<br>";
-        // Continue displaying other fields as needed
-    } else {
-        echo "Record not found";
-    }
-  
-    
 } else {
-    // Initialize $row with empty values if no id is provided
-    $row = array(
-        'brand' => '',
-        'model' => '',
-        'chipset' => '',
-        'ram' => '',
-        'storage' => '',
-        'display_size' => '',
-        'resolution' => '',
-        'refresh_rate' => '',
-        'connectivity' => '',
-        'usb' => '',
-        'battery' => '',
-        'os' => '',
-        'price' => '',
-        'color' => '',
-        'description' => ''
-    );
+    header("Location: loginform.php");
+    exit();
 }
 ?>
 
-<div class="update_product_forms">
-    <form method="POST" action="update_productform.php">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+</head>
+<body>
+
+<?php
+// Check if $product variable is set and not empty before populating form fields
+if(isset($product) && !empty($product)) {
+?>
+    <h2>Update Product</h2>
+
+
+    <form action="updateproductfunction.php" method="POST">
+        <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
         
-        <input type="hidden" name="update_product_id" value="<?php echo isset($_GET['id']) ? htmlspecialchars($_GET['id']) : (isset($_POST['update_product_id']) ? htmlspecialchars($_POST['update_product_id']) :''); ?>">
-        Brand: <input type="text" name="brand" value="<?php echo htmlspecialchars($row['brand']); ?>"><br>
-        Model: <input type="text" name="model" value="<?php echo htmlspecialchars($row['model']); ?>"><br>
-        Chipset: <input type="text" name="chipset" value="<?php echo htmlspecialchars($row['chipset']); ?>"><br>
-        Ram: <input type="text" name="ram" value="<?php echo htmlspecialchars($row['ram']); ?>"><br>
-        Storage: <input type="text" name="storage" value="<?php echo htmlspecialchars($row['storage']); ?>"><br>
-        Display Size: <input type="text" name="display_size" value="<?php echo htmlspecialchars($row['display_size']); ?>"><br>
-        Resolution: <input type="text" name="resolution" value="<?php echo htmlspecialchars($row['resolution']); ?>"><br>
-        Refresh Rate: <input type="text" name="refresh_rate" value="<?php echo htmlspecialchars($row['refresh_rate']); ?>"><br>
-        Connectivity: <input type="text" name="connectivity" value="<?php echo htmlspecialchars($row['connectivity']); ?>"><br>
-        USB: <input type="text" name="usb" value="<?php echo htmlspecialchars($row['usb']); ?>"><br>
-        Battery: <input type="text" name="battery" value="<?php echo htmlspecialchars($row['battery']); ?>"><br>
-        Os: <input type="text" name="os" value="<?php echo htmlspecialchars($row['os']); ?>"><br>
-        Price: <input type="text" name="price" value="<?php echo htmlspecialchars($row['price']); ?>"><br>
-        Color: <input type="text" name="color" value="<?php echo htmlspecialchars($row['color']); ?>"><br>
-        Description: <input type="text" name="description" value="<?php echo htmlspecialchars($row['description']); ?>"><br>
-        <button type="submit" name="update">Update Product</button>
+        <label for="brand">Brand:</label>
+        <input type="text" id="brand" name="brand" value="<?php echo $product['brand']; ?>"><br>
+
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="model" value="<?php echo $product['model']; ?>"><br>
+
+        <label for="chipset">Chipset:</label>
+        <input type="text" id="chipset" name="chipset" value="<?php echo $product['chipset']; ?>"><br>
+
+        <label for="ram">RAM:</label>
+        <input type="text" id="ram" name="ram" value="<?php echo $product['ram']; ?>"><br>
+
+        <label for="storage">Storage:</label>
+        <input type="text" id="storage" name="storage" value="<?php echo $product['storage']; ?>"><br>
+
+        <label for="display_size">Display Size:</label>
+        <input type="text" id="display_size" name="display_size" value="<?php echo $product['display_size']; ?>"><br>
+
+        <label for="resolution">Resolution:</label>
+        <input type="text" id="resolution" name="resolution" value="<?php echo $product['resolution']; ?>"><br>
+
+        <label for="refresh_rate">Refresh Rate:</label>
+        <input type="text" id="refresh_rate" name="refresh_rate" value="<?php echo $product['refresh_rate']; ?>"><br>
+
+        <label for="connectivity">Connectivity:</label>
+        <input type="text" id="connectivity" name="connectivity" value="<?php echo $product['connectivity']; ?>"><br>
+
+        <label for="usb">USB:</label>
+        <input type="text" id="usb" name="usb" value="<?php echo $product['usb']; ?>"><br>
+
+        <label for="battery">Battery:</label>
+        <input type="text" id="battery" name="battery" value="<?php echo $product['battery']; ?>"><br>
+
+        <label for="os">OS:</label>
+        <input type="text" id="os" name="os" value="<?php echo $product['os']; ?>"><br>
+
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" value="<?php echo $product['price']; ?>"><br>
+
+        <label for="color">Color:</label>
+        <input type="text" id="color" name="color" value="<?php echo $product['color']; ?>"><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"><?php echo $product['product_desc']; ?></textarea><br>
+
+        <button type="submit">Update Product</button>
     </form>
-</div>
+<?php
+} else {
+    echo "Error: Product details not found.";
+}
+?>
+
+</body>
+</html>
