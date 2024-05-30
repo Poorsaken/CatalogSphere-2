@@ -22,24 +22,24 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
 
         <div class="parent-flex">
             
-        
-        <div class="left">
-        
-        </div>
+                
+                <div class="left">
+                
+                        </div>
 
 
-            <div class="right">
-            
-            <h1>Hi this is kaye shop!</h1>
-            
-            <button class="btn_toshop" onclick="gotoAddProducts()">Go to shop</button>
-            
+                            <div class="right">
+                            
+                            <h1>Hi this is kaye shop!</h1>
+                            
+                            <button class="btn_toshop" onclick="gotoAddProducts()">Go to shop</button>
+                            
 
-           
-            
-            </div>
+                        
+                            
+                            </div>
 
-    </div>
+                 </div>
 
         </body>
     </html>
