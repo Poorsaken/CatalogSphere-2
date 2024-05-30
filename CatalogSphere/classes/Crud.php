@@ -62,28 +62,85 @@ function getProductDetailsByBrand($brand, $model) {
 
 
 
-function updateProfile($brand, $model, $chipset, $ram, $storage, $display_size, $resolution, $refresh_rate, $connectivity, $usb, $battery, $os, $price, $color, $description) {
-    $sql = "UPDATE `tbl_products`
-            SET brand = ?, model = ?, chipset = ?, ram = ?, storage = ?, display_size = ?, resolution = ?, refresh_rate = ?, connectivity = ?, usb = ?, battery = ?, os = ?, price = ?, color = ?, description = ?
-            WHERE brand = ?";
-    
-    $stmt = $this->conn->prepare($sql);
-     $stmt = $con->prepare($sql);
+
+
+
+function getProfileById($id){
+  global $con;
+  try {
+      $sql = "SELECT * FROM `tbl_student_records` WHERE `id` = :id";
+      $stmt = $con->prepare($sql);
+      $stmt->bindParam(':id', $id);
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC); 
+  } catch(PDOException $e){
+      echo "Error fetching record: " . $e->getMessage();
+      return false; 
+  }
+}
+
+
+
+
+function updateProfile($product_id, $brand, $model, $chipset, $ram, $storage, $display_size, $resolution, $refresh_rate, $connectivity, $usb, $battery, $os, $price, $color, $description){
+    global $con;
+    try {
+        $sql = "UPDATE `tbl_products` 
+                SET `brand` = :brand, 
+                    `model` = :model, 
+                    `chipset` = :chipset, 
+                    `ram` = :ram, 
+                    `storage` = :storage, 
+                    `display_size` = :display_size, 
+                    `resolution` = :resolution, 
+                    `refresh_rate` = :refresh_rate, 
+                    `connectivity` = :connectivity, 
+                    `usb` = :usb, 
+                    `battery` = :battery, 
+                    `os` = :os, 
+                    `price` = :price, 
+                    `color` = :color, 
+                    `description` = :description
+                WHERE `product_id` = :product_id";
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':product_id', $product_id);
         $stmt->bindParam(':brand', $brand);
         $stmt->bindParam(':model', $model);
         $stmt->bindParam(':chipset', $chipset);
+        $stmt->bindParam(':ram', $ram);
+        $stmt->bindParam(':storage', $storage);
         $stmt->bindParam(':display_size', $display_size);
         $stmt->bindParam(':resolution', $resolution);
         $stmt->bindParam(':refresh_rate', $refresh_rate);
+        $stmt->bindParam(':connectivity', $connectivity);
+        $stmt->bindParam(':usb', $usb);
+        $stmt->bindParam(':battery', $battery);
+        $stmt->bindParam(':os', $os);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':color', $color);
+        $stmt->bindParam(':description', $description);
         $stmt->execute();
         return true; 
-    
-    if ($stmt->execute()) {
-        return true;
-    } else {
-        return false;
+    } catch(PDOException $e){
+        echo "Error updating record: " . $e->getMessage();
+        return false; 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

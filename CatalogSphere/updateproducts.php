@@ -72,10 +72,11 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                         echo "<td>{$product['color']}</td>";
                         echo "<td class='description'>{$product['product_desc']}</td>";
                         echo "<td>";
-                     echo "<form method='POST' action='update_product.php'>"; // Form submission to update_product.php
-                    echo "<input type='hidden' name='update_product_id' value='{$product['id']}'>"; // Pass product ID
-                    echo "<button type='submit' style='padding: 5px 10px;'>Update</button>"; // Use button instead of input
-                    echo "</form>";
+                     echo "<form method='POST' action='update_productform.php'>";
+                        echo "<input type='hidden' name='update_product_id' value='" . $product['id'] . "'>"; // Assuming 'id' is the primary key of your product table
+                        echo "<button type='submit' style='padding: 5px 10px;'>Update</button>";
+                        echo "</form>";
+
 
 
                         echo "</td>";
