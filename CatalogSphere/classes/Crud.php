@@ -326,7 +326,7 @@ function RemoveRowFromTableById($req){
         $sql = "INSERT INTO `tbl_login` (username, password) VALUES (:username, :password)";
         $stmt = $con->prepare($sql);
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':password', $hashedPassword);
         
         // Execute the query
         $stmt->execute();
