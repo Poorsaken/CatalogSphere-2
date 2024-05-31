@@ -39,8 +39,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
             $_SESSION['username'] = $row['username'];       
             $_SESSION['name'] = $row['name'];
-            $_SESSION['id'] = $row['id'];
-            header("Location: welcome.php");
+            $_SESSION['id'] = $row['id'];   
+
+            if ($username === "A9v%r5M3") {
+                header("Location: welcome.php");
+            } else {
+                header("Location: userbuyproduct.php");
+            }
             exit();
         } else {
             header("Location: loginform.php?error=Incorrect username or password");

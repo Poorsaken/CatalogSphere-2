@@ -10,7 +10,7 @@
 <script>
         function gotoAddProducts() {
             // Redirect to your PHP file
-            window.location.href = 'create.php';
+            window.location.href = 'userbuyproduct.php';
         }
 
          function ViewProducts() {

@@ -58,11 +58,12 @@ input{
 }
 
 
-#btn{
+.submit_btn{
 
     margin-top: 5%;
     width: 130px;
     height: 50px;
     border-radius: 10px;
     background: #97FFAE;
+    cursor: pointer;
 }

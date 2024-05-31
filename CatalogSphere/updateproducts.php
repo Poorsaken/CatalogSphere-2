@@ -54,35 +54,32 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                     $obj = new Crud();
                     $products = $obj-> GetAllProducts() ;
 
-                    foreach ($products as $product) {
-                        echo "<tr>";
-                        echo "<td>{$product['brand']}</td>";
-                        echo "<td>{$product['model']}</td>";
-                        echo "<td>{$product['chipset']}</td>";
-                        echo "<td>{$product['ram']}</td>";
-                        echo "<td>{$product['storage']}</td>";
-                        echo "<td>{$product['display_size']}</td>";
-                        echo "<td>{$product['resolution']}</td>";
-                        echo "<td>{$product['refresh_rate']}</td>";
-                        echo "<td>{$product['connectivity']}</td>";
-                        echo "<td>{$product['usb']}</td>";
-                        echo "<td>{$product['battery']}</td>";
-                        echo "<td>{$product['os']}</td>";
-                        echo "<td>{$product['price']}</td>";
-                        echo "<td>{$product['color']}</td>";
-                        echo "<td class='description'>{$product['product_desc']}</td>";
-                        echo "<td>";
-                    echo "<form method='POST' action='update_productform.php'>";
-        echo "<input type='hidden' name='update_product_id' value='" . $product['id'] . "'>"; // Assuming 'id' is the primary key of your product table
-        echo "<button type='submit' style='padding: 5px 10px;'>Update</button>";
-        echo "</form>";
+                   foreach ($products as $product) {
+    echo "<tr>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['brand']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['model']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['chipset']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['ram']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['storage']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['display_size']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['resolution']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['refresh_rate']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['connectivity']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['usb']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['battery']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['os']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['price']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>{$product['color']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;' class='description'>{$product['product_desc']}</td>";
+    echo "<td style='border: 1px solid black; padding: 5px;'>";
+    echo "<form method='POST' action='update_productform.php'>";
+    echo "<input type='hidden' name='update_product_id' value='" . $product['id'] . "'>"; // Assuming 'id' is the primary key of your product table
+    echo "<button type='submit' style='padding: 5px 10px;'>Update</button>";
+    echo "</form>";
+    echo "</td>";
+    echo "</tr>";
+}
 
-
-
-
-                        echo "</td>";
-                        echo "</tr>";
-                    }
                     ?>
                 </tbody>
             </table>

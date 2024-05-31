@@ -120,7 +120,7 @@
           <div class="left-container">
             <label for="product_desc">Product Description:</label>
             <input type="text" id="product_desc" name="product_desc" class="product_desc" required><br><br>
-            <button name="btn" id="btn">SUBMIT</button>
+            <button name="btn" id="btn" class="submit_btn">SUBMIT</button>
           </div>
         </div>
       </div>
