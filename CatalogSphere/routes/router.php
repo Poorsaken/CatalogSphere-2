@@ -10,7 +10,7 @@
 <script>
         function gotoAddProducts() {
             // Redirect to your PHP file
-            window.location.href = 'userbuyproduct.php';
+            window.location.href = 'create.php';
         }
 
          function ViewProducts() {
@@ -42,11 +42,30 @@
         function ViewDeletedProducts() {
 
             window.location.href = 'deletedproducts.php';
+
+        }
+
+        function ViewOrderStatus() {
+
+            window.location.href = 'OrderStatusView.php';
+        }
+
+        function ViewApprovedOrder() {
+
+            window.location.href = 'ViewApprovedOrder.php';
         }
 
         function ToUpdateProducts(){
 
             window.location.href = 'updateproducts.php';
+        }
+        function ToCustomerProducts(){
+
+            window.location.href = 'userbuyproduct.php';
+        }
+        function ViewPendingProducts(){
+
+            window.location.href = 'customerorder.php';
         }
 
 

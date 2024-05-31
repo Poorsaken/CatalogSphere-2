@@ -18,11 +18,7 @@
     position: fixed;
 }
 
-.navlinks {
 
-    cursor: pointer;
-    padding: 5% 0% 5% 5%;
-}
 
 .navlinks_add {
 
@@ -118,4 +114,19 @@ a{
     background-position: center;
     background-size: cover; /* Ensures the image covers the entire element */
     background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+
+.navlinks a {
+    text-decoration: none;
+    color: black; /* Default color */
+    
+
+    cursor: pointer;
+    padding: 5% 0% 5% 5%;
+
+}
+
+.navlinks a.active {
+    color: red; /* Color when active */
 }

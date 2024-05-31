@@ -85,7 +85,8 @@ body{
 .right-container{
 
     width: 80%;
-    padding-top: 4%;
+    padding: 0%;
+ 
 }
 
 .card-image{
@@ -94,7 +95,7 @@ body{
     width: 140px;
     height: 140px;
     border-radius: 10px;
-    background-color: #FF7171;
+    background-color: #f87171;
    
 }
 
@@ -117,7 +118,7 @@ body{
 
 }
 
-.buy_tbn{
+.buy_btn{
     
       background-color: #b489f8;
     
@@ -133,7 +134,7 @@ body{
     cursor: pointer;
 }
 
-.buy_tbn:hover{
+.buy_btn:hover{
     background-color: #9669E0;
     width: 210px;
     border-radius: 24.5px;
@@ -160,7 +161,7 @@ body{
         font-size: 16px;
         font-weight: 500;
         opacity: 50%;
-            margin: 1% 0% 1% 0%;
+            margin: 0% 0% 0% 0%;
 }
 
 .Welcome_to{

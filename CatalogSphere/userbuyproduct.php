@@ -1,124 +1,91 @@
-
 <?php
 session_start();
 include('./routes/router.php');
 
-
-        
 if(isset($_SESSION['id']) && isset($_SESSION['username'])){
 ?>
-
-
-   
 <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-            <link rel="stylesheet" href  = "./css/buyproducts.css" /> 
-        </head>
-        <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/buyproduct.css"/>
+</head>
+<body>
 
-        <div class="products_container">
-            <div class="left_container">
-                <?php include('./navigation/usersnavigation.php'); ?>
-            </div>
+<div class="products_container">
+    <div class="left_container">
+        <?php include('./navigation/usersnavigation.php'); ?>
+    </div>
 
-
-          
     <div class="div_right">
         <div class="header_buy">
- <div class="Welcome_to">Welcome to Catalog Sphere!</div>
+            <div class="Welcome_to">Welcome to Catalog Sphere!</div>
             <div class="buypro">
-            <p>Buy Product</p>
+                <p>Buy Product</p>
+            </div>
         </div>
-        </div>
-           
-      <div class="card-container">
 
-      
-        <?php
+        <div class="card-container">
+            <?php
+            include('./classes/Database.php');
+            include('./classes/Crud.php');
+            $DB = new Database();
+            $DB->connectDB();
+            $obj = new Crud();
+            $products = $obj->BuyProducts();
 
-        include('./classes/Crud.php');
-                    include('./Classes/Database.php');
-                    $DB = new Database();
-                    $DB->connectDB();
-                    $obj = new Crud();
-                    $products = $obj->GetAllProducts();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
+                $obj->InsertBuyProduct($_POST['product_id']);
+            }
 
-
-
-                    
-       echo "<div class = 'container'>";
-                    
-                   
-
-        foreach ($products as $product) {
-            // echo "<div class='card'>";
-            //      echo "<div class='card-header'>{$product['brand']} {$product['model']}</div>";
-            // echo "<div class='card-body'>";
-            // echo "<p><strong>Color:</strong> {$product['color']}</p>";
-            //              echo "<p class='card-description'>{$product['product_desc']}</p>";
-            //      echo "</div>";
-            // echo "</div>";
-
-            echo "<div class ='card'>";
-
+            if ($products) {
+                echo "<div class='container'>";
+                foreach ($products as $product) {
+                    echo "<div class='card'>";
                     echo "<div class='header-container'>";
-                   
-                            echo "<div class='left-container'>";
-
-                                        echo "<div class='card-image'>";
-                                        
-                                        echo "</div>";
-
-                                echo "</div>";
-
-                    
-                            echo "<div class='right-container'>";
-                                   echo "<div class='card-model'><strong>{$product['model']}</strong></div>";
-                             echo "<div class='card-brand'>{$product['brand']} </div>";
-            echo "<p>Color: {$product['color']}</p>";
-                            echo "</div>";
+                    echo "<div class='left-container'>";
+                    echo "<div class='card-image'></div>";
                     echo "</div>";
-              
- echo "<div class = 'title_description'>Description: </div>";
-            
-                  echo "<p class='card-description'>  {$product['product_desc']}</p>";
-
-                   echo "<div class = 'buy_container'>";
-                     echo "<div class = 'buy_tbn'> Buy Product </div>";
-                   echo "</div>";
-            echo "</div>";
-
-            
-
-        }
-
-         echo "</div>";
-        ?>
-    </div>
+                    echo "<div class='right-container'>";
+                    echo "<div class='card-model'><strong>{$product['model']}</strong></div>";
+                    echo "<div class='card-brand'>{$product['brand']}</div>";
+                    echo "<div class='card-price'>{$product['price']}</div>";
+                    echo "<p>Color: {$product['color']}</p>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "<div class='title_description'>Description: </div>";
+                    echo "<p class='card-description'>{$product['product_desc']}</p>";
+                    echo "<div class='buy_container'>";
+                    // Form starts here
+                    echo "<form action='' method='POST'>";
+                    echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($product['id']) . "'>"; // Include product ID
+                    echo "<input type='hidden' name='model' value='" . htmlspecialchars($product['model']) . "'>";
+                    echo "<input type='hidden' name='brand' value='" . htmlspecialchars($product['brand']) . "'>";
+                    echo "<input type='hidden' name='price' value='" . htmlspecialchars($product['price']) . "'>";
+                    echo "<input type='hidden' name='color' value='" . htmlspecialchars($product['color']) . "'>";
+                    echo "<input type='hidden' name='description' value='" . htmlspecialchars($product['product_desc']) . "'>";
+                    echo "<button type='submit' name='buy_product' class='buy_btn' id='btn'>Buy Product</button>";
+                    echo "</form>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+                echo "</div>";
+            } else {
+                echo "No products available.";
+            }
+            ?>
+        </div>
     </div>
 </div>
-            
-        
-        </body>
-        </html>
 
+</body>
+</html>
 
-    <?php
-
-}
-else {
-
+<?php
+} else {
     header("Location: loginform.php");
     exit();
 }
-
 ?>
-
-
-
-
-

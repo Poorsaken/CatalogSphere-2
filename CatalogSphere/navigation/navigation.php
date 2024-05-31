@@ -30,6 +30,9 @@ include('./routes/router.php');
     <div class="navlinks">
         <a onclick="ViewDeletedProducts()">Deleted Products</a>
     </div>
+    <div class="navlinks">
+        <a onclick="ViewPendingProducts()">Customer Order</a>
+    </div>
     <div class="navlinks_add">
         <a onclick="gotoAddProducts()">Add Products</a>
     </div>

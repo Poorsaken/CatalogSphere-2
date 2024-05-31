@@ -19,6 +19,22 @@ class Crud{
 }
 
 
+ function BuyProducts(){
+    global $con;
+    try {
+        $sql = "SELECT * FROM `tbl_products` ORDER BY id";
+        $stmt = $con->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+
+
+
 function GetProductById($product_id){
     global $con;
     try {
@@ -41,6 +57,36 @@ function GetAllDeletedProducts(){
     try {
 
         $sql= "SELECT * FROM `tbl_deletedproducts` ORDER BY id";
+        $stmt = $con ->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }catch (PDOException $e){
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function GetAllBuyProducts(){
+
+    global $con;
+    try {
+
+        $sql= "SELECT * FROM `tbl_buyproduct` ORDER BY id";
+        $stmt = $con ->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }catch (PDOException $e){
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function GetAllApprovedOrder(){
+
+    global $con;
+    try {
+
+        $sql= "SELECT * FROM `tbl_approved` ORDER BY id";
         $stmt = $con ->prepare($sql);
         $stmt->execute();
 
@@ -153,12 +199,7 @@ function updateProfile($product_id, $brand, $model, $chipset, $ram, $storage, $d
 
 
 
-
-
-
-
-
-
+// Assuming $con is your PDO connection
 
 
 
@@ -310,6 +351,59 @@ function RemoveRowFromTableById($req){
 }
 
 
+  function ApproveProduct($product_id){
+    global $con;
+
+    try {
+        // Fetch product details from tbl_products
+        $sql = "SELECT * FROM tbl_buyproduct WHERE id = $product_id";
+        $result = $con->query($sql);
+        $product = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($product) {
+            // Insert product details into tbl_deletedproducts
+            $sql = "INSERT INTO tbl_approved
+                    (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc)
+                    VALUES
+                    ('{$product['brand']}', '{$product['model']}', '{$product['chipset']}', '{$product['ram']}', '{$product['storage']}', '{$product['display_size']}', '{$product['resolution']}', '{$product['refresh_rate']}', '{$product['connectivity']}', '{$product['usb']}', '{$product['battery']}', '{$product['os']}', '{$product['price']}', '{$product['color']}', '{$product['product_desc']}')";
+            $con->exec($sql);
+
+            // Delete the product from tbl_products
+            $sql = "DELETE FROM tbl_buyproduct WHERE id = $product_id";
+            $con->exec($sql);
+        } else {
+            echo "";
+        }
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+
+function getApprovedProductById($product_id) {
+    global $con;
+    try {
+        // Prepare the SQL query to fetch a product by its ID from the tbl_approved table
+        $sql = "SELECT * FROM `tbl_approved` WHERE `id` = :id";
+        $stmt = $con->prepare($sql);
+        
+        // Bind the product ID parameter to the query
+        $stmt->bindParam(':id', $product_id, PDO::PARAM_INT);
+        
+        // Execute the query
+        $stmt->execute();
+        
+        // Fetch and return the result as an associative array
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        // Handle any exceptions by displaying the error message
+        echo "Error fetching record: " . $e->getMessage();
+        return false;
+    }
+}
+
+
+
     
 
   function SignUp($req) {
@@ -342,7 +436,63 @@ function RemoveRowFromTableById($req){
         echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
     }
 }
+
+function InsertBuyProduct($product_id){
+    global $con;
+    $status = 0;  // Define the variable with value "pending"
+
+    try {
+        // Fetch product details from tbl_products
+        $sql = "SELECT * FROM tbl_products WHERE id = :product_id";
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($product) {
+            // Insert product details into tbl_buyproduct
+            $sql = "INSERT INTO tbl_buyproduct
+                    (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc, status)
+                    VALUES
+                    (:brand, :model, :chipset, :ram, :storage, :display_size, :resolution, :refresh_rate, :connectivity, :usb, :battery, :os, :price, :color, :product_desc, :status)";
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':brand', $product['brand']);
+            $stmt->bindParam(':model', $product['model']);
+            $stmt->bindParam(':chipset', $product['chipset']);
+            $stmt->bindParam(':ram', $product['ram']);
+            $stmt->bindParam(':storage', $product['storage']);
+            $stmt->bindParam(':display_size', $product['display_size']);
+            $stmt->bindParam(':resolution', $product['resolution']);
+            $stmt->bindParam(':refresh_rate', $product['refresh_rate']);
+            $stmt->bindParam(':connectivity', $product['connectivity']);
+            $stmt->bindParam(':usb', $product['usb']);
+            $stmt->bindParam(':battery', $product['battery']);
+            $stmt->bindParam(':os', $product['os']);
+            $stmt->bindParam(':price', $product['price']);
+            $stmt->bindParam(':color', $product['color']);
+            $stmt->bindParam(':product_desc', $product['product_desc']);
+            $stmt->bindParam(':status', $status);  // Use the "pending" status
+            $stmt->execute();
+
+            // Delete the product from tbl_products
+            $sql = "DELETE FROM tbl_products WHERE id = :product_id";
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+            $stmt->execute();
+        } else {
+            // Handle case where product is not found (optional)
+        }
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 }
+
+
+}
+
+
+
+
 
 
 ?>
