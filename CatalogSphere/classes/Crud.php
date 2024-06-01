@@ -190,7 +190,7 @@ function updateProfile($product_id, $brand, $model, $chipset, $ram, $storage, $d
 }
 
 
-
+// this line for upload image file code 
 
 
 
@@ -205,9 +205,10 @@ function updateProfile($product_id, $brand, $model, $chipset, $ram, $storage, $d
 
 
 
-    function InsertProduct($req){
-    
+function insertProduct($req, $files) {
     global $con;
+
+    // Extract form fields
     $brand = $req['brand'];
     $model = $req['model'];
     $chipset = $req['chipset'];
@@ -215,8 +216,8 @@ function updateProfile($product_id, $brand, $model, $chipset, $ram, $storage, $d
     $storage = $req['storage'];
     $display_size = $req['display_size'];
     $resolution = $req['resolution'];
-    $refresh_rate = $req['refresh_rate']; // Make sure to include this field
-    $connectivity = $req['connectivity']; // Make sure to include this field
+    $refresh_rate = $req['refresh_rate'];
+    $connectivity = $req['connectivity'];
     $usb = $req['usb'];
     $battery = $req['battery'];
     $os = $req['os'];
@@ -224,51 +225,63 @@ function updateProfile($product_id, $brand, $model, $chipset, $ram, $storage, $d
     $color = $req['color'];
     $product_desc = $req['product_desc'];
 
-    // Debugging output to check if values are being received
-    // echo "<pre>";
-    // print_r($req);
-    // echo "</pre>";
+    // Handle image upload
+    $targetDir = "uploaded_image/"; // Relative path to the directory where images will be uploaded
+    $fileName = basename($files["product_image"]["name"]);
+    $targetFilePath = $targetDir . $fileName;
+    $imageFileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
 
-    try {
-        $sql = "INSERT INTO tbl_products
-         (brand,
-         model,
-         chipset,
-         ram,
-         storage,
-         display_size,
-         resolution,
-         refresh_rate,
-         connectivity,
-         usb,
-         battery,
-         os,
-         price,
-         color,
-         product_desc)
-          VALUES 
-          ('$brand',
-          '$model',
-          '$chipset',
-          '$ram',
-          '$storage',
-          '$display_size',
-          '$resolution',
-          '$refresh_rate',
-          '$connectivity',
-          '$usb',
-          '$battery',
-          '$os',     
-          '$price',
-          '$color',
-          '$product_desc')";
-        
-        $con->exec($sql);
-             echo "<script>alert('New record created successfully');</script>";
-    }catch(PDOException $e){
-        echo $sql . "<br>" . $e->getMessage(); // Display SQL error message
+    // Allow certain file formats
+    $allowTypes = array('jpg', 'jpeg', 'png', 'gif');
+    if (in_array($imageFileType, $allowTypes)) {
+        // Check if the directory exists, if not create it
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+
+        // Upload file to server
+        if (move_uploaded_file($files["product_image"]["tmp_name"], $targetFilePath)) {
+            // Insert product data into the database
+            try {
+                $sql = "INSERT INTO tbl_products 
+                        (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc, product_image)
+                        VALUES 
+                        (:brand, :model, :chipset, :ram, :storage, :display_size, :resolution, :refresh_rate, :connectivity, :usb, :battery, :os, :price, :color, :product_desc, :product_image)";
+
+                $stmt = $con->prepare($sql);
+                $stmt->bindParam(':brand', $brand);
+                $stmt->bindParam(':model', $model);
+                $stmt->bindParam(':chipset', $chipset);
+                $stmt->bindParam(':ram', $ram);
+                $stmt->bindParam(':storage', $storage);
+                $stmt->bindParam(':display_size', $display_size);
+                $stmt->bindParam(':resolution', $resolution);
+                $stmt->bindParam(':refresh_rate', $refresh_rate);
+                $stmt->bindParam(':connectivity', $connectivity);
+                $stmt->bindParam(':usb', $usb);
+                $stmt->bindParam(':battery', $battery);
+                $stmt->bindParam(':os', $os);
+                $stmt->bindParam(':price', $price);
+                $stmt->bindParam(':color', $color);
+                $stmt->bindParam(':product_desc', $product_desc);
+                $stmt->bindParam(':product_image', $fileName);
+                $stmt->execute();
+                
+                echo "The product has been inserted successfully.";
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    } else {
+        echo "Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.";
     }
 }
+
+
+
+
 
 
 

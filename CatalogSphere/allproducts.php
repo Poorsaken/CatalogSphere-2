@@ -30,6 +30,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
             <table class="product-table">
                 <thead>
                     <tr>
+                        <th>Picture</th>
                         <th>Brand</th>
                         <th>Model</th>
                         <th>Chipset</th>
@@ -61,6 +62,9 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
                     foreach ($products as $index => $product) {
                 $rowStyle = $index % 2 == 0 ? 'background-color: #f9f9f9;' : '';
                 echo "<tr style='{$rowStyle}' data-product-id='{$product['id']}'>";
+                //newly added 
+                $imagePath = "uploaded_image/{$product['product_image']}";
+                echo "<td style='padding: 10px; border: 1px solid #ddd;'><img src='{$imagePath}' alt='{$product['model']}' style='width: 100px; height: auto;'></td>";
                 echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['brand']}</td>";
                 echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['model']}</td>";
                 echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['chipset']}</td>";

@@ -46,7 +46,9 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
                     echo "<div class='card'>";
                     echo "<div class='header-container'>";
                     echo "<div class='left-container'>";
-                    echo "<div class='card-image'></div>";
+                    //newly added 
+                    $imagePath = "uploaded_image/{$product['product_image']}";
+                    echo "<div class='card-image'><img src='{$imagePath}' alt='{$product['model']}' style='width: 100px; height: auto;'></div>";
                     echo "</div>";
                     echo "<div class='right-container'>";
                     echo "<div class='card-model'><strong>{$product['model']}</strong></div>";
