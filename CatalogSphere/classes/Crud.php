@@ -347,9 +347,9 @@ function RemoveRowFromTableById($req){
         if ($product) {
             // Insert product details into tbl_deletedproducts
             $sql = "INSERT INTO tbl_deletedproducts
-                    (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc)
+                    (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc,product_image)
                     VALUES
-                    ('{$product['brand']}', '{$product['model']}', '{$product['chipset']}', '{$product['ram']}', '{$product['storage']}', '{$product['display_size']}', '{$product['resolution']}', '{$product['refresh_rate']}', '{$product['connectivity']}', '{$product['usb']}', '{$product['battery']}', '{$product['os']}', '{$product['price']}', '{$product['color']}', '{$product['product_desc']}')";
+                    ('{$product['brand']}', '{$product['model']}', '{$product['chipset']}', '{$product['ram']}', '{$product['storage']}', '{$product['display_size']}', '{$product['resolution']}', '{$product['refresh_rate']}', '{$product['connectivity']}', '{$product['usb']}', '{$product['battery']}', '{$product['os']}', '{$product['price']}', '{$product['color']}', '{$product['product_desc']}', '{$product['product_image']}')";
             $con->exec($sql);
 
             // Delete the product from tbl_products

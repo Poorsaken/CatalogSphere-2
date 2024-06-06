@@ -35,6 +35,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
         if($result) {
             echo "Product updated successfully.";
             // Redirect user to a page indicating success
+             header("Location: updateproducts.php");
         } else {
             echo "Error updating product.";
             // Redirect user to a page indicating error

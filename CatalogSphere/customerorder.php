@@ -4,8 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/allproduct.css" /> 
+    <link rel="stylesheet" href="./css/allproducts.css" />  
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .products_container {
+            display: flex;
+        }
+
+        .left_container {
+            width: 20%;
+        }
+
+        .div_right {
+            width: 80%;
+            padding: 20px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .product-card h2 {
+            margin-top: 0;
+        }
+
+        .product-card .product-info {
+            margin-bottom: 10px;
+        }
+
+        .product-card .product-info span {
+            display: block;
+        }
+
+        .product-card form {
+            margin-top: 10px;
+        }
+
+        .product-card form input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,79 +69,81 @@
     </div>
 
     <div class="div_right">
-        <div class="table-container">
-            <table class="product-table">
-                <div class="">
-                    <h1>Customer Order</h1>
-                </div>
-                <thead>
-                    <tr>
-                        <th>Brand</th>
-                        <th>Model</th>
-                        <th>Chipset</th>
-                        <th>RAM</th>
-                        <th>Storage</th>
-                        <th>Display Size</th>
-                        <th>Resolution</th>
-                        <th>Refresh Rate</th>
-                        <th>Connectivity</th>
-                        <th>USB</th>
-                        <th>Battery</th>
-                        <th>OS</th>
-                        <th>Price</th>
-                        <th>Color</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    include('./classes/Crud.php');
-                    include('./Classes/Database.php');
+        <div class="">
+            <h1>Customer Order</h1>
+        </div>
+        <div class="card-container">
+            <?php
+            include('./classes/Crud.php');
+            include('./Classes/Database.php');
 
-                    $DB = new Database();
-                    $DB->connectDB();
+            $DB = new Database();
+            $DB->connectDB();
 
-                    $obj = new Crud();
-                    $products = $obj->GetAllBuyProducts();
+            $obj = new Crud();
+            $products = $obj->GetAllBuyProducts();
 
-                     // Handle delete request
-                        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_product_id'])) {
-                            $obj->ApproveProduct($_POST['delete_product_id']);
-                        }
+            // Handle delete request
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_product_id'])) {
+                $obj->ApproveProduct($_POST['delete_product_id']);
+            }
 
-                    foreach ($products as $index => $product) {
-                        $rowStyle = $index % 2 == 0 ? 'background-color: #f9f9f9;' : '';
-                        echo "<tr style='{$rowStyle}' data-product-id='{$product['id']}'>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['brand']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['model']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['chipset']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['ram']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['storage']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['display_size']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['resolution']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['refresh_rate']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['connectivity']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['usb']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['battery']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['os']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['price']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['color']}</td>";
-                     
-                      echo "<td style='padding: 10px; border: 1px solid #ddd;'>";
-                echo "<form method='POST' action=''>";
-                echo "<input type='hidden' name='delete_product_id' value='{$product['id']}'>";
-                echo "<input type='submit' value='Accept' style='padding: 5px 10px;'>";
-                echo "</form>";
-                echo "</td>";
-                echo "</tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+            foreach ($products as $index => $product) {
+              echo "<div class='card'>";
+                    echo "<div class='header-container'>";
+                    echo "<div class='left-container'>";
+                    //newly added 
+                   $imagePath = "uploaded_image/{$product['product_image']}";
+echo "<div class='card-image'><img src='{$imagePath}' alt='{$product['model']}' style='width: 100%; height: 100%; object-fit: cover;'></div>";
+
+                    echo "</div>";
+                    echo "<div class='right-container'>";
+                    echo "<div class='card-model'><strong>{$product['model']}</strong></div>";
+                    echo "<div class='card-brand'>{$product['brand']}</div>";
+                    echo "<div class='card-price'>{$product['price']}</div>";
+                    echo "<p>Color: {$product['color']}</p>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "<div class='specs_container'>";
+
+                       echo "<div class='specss'>";
+                      echo "<p class='card-enc'>{$product['chipset']}</p>";
+                    echo "<p class='card-enc'>{$product['ram']}</p>";
+                    echo "<p class='card-enc'>{$product['storage']}</p>";
+                    echo "<p class='card-enc'>{$product['display_size']}</p>";
+                    echo "<p class='card-enc'>{$product['resolution']}</p>";
+                    echo "</div>";
+                  
+                     echo "<div class='specss'>";
+
+
+                     echo "<p class='card-enc'>{$product['refresh_rate']}</p>";
+                     echo "<p class='card-enc'>{$product['connectivity']}</p>";
+                     echo "<p class='card-enc'>{$product['price']}</p>";
+                     echo "<p class='card-enc'>{$product['os']}</p>";
+                     echo "</div>";
+
+                     echo "</div>";
+                    echo "<div class='title_description'>Description: </div>";
+                    echo "<p class='card-description'>{$product['product_desc']}</p>";
+                    echo "<div class='buy_container'>";
+                    // Form starts here
+                    echo "<form action='' method='POST'>";
+                    echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($product['id']) . "'>"; // Include product ID
+                    echo "<input type='hidden' name='model' value='" . htmlspecialchars($product['model']) . "'>";
+                    echo "<input type='hidden' name='brand' value='" . htmlspecialchars($product['brand']) . "'>";
+                    echo "<input type='hidden' name='price' value='" . htmlspecialchars($product['price']) . "'>";
+                    echo "<input type='hidden' name='color' value='" . htmlspecialchars($product['color']) . "'>";
+                    echo "<input type='hidden' name='description' value='" . htmlspecialchars($product['product_desc']) . "'>";
+                 
+                    echo "</form>";
+                    echo "</div>";
+                    echo "</div>";
+            }
+            ?>
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

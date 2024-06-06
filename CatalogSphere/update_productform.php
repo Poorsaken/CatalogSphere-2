@@ -32,8 +32,15 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Product</title>
+    <link rel = "stylesheet" href  = "./css/allproducts.css"/>
 </head>
 <body>
+
+<div class="products_container">
+    <div class="left-container">
+        <?php include('./navigation/navigation.php') ?>
+    </div>
+    <div class="div_right">
 
 <?php
 // Check if $product variable is set and not empty before populating form fields
@@ -97,6 +104,15 @@ if(isset($product) && !empty($product)) {
     echo "Error: Product details not found.";
 }
 ?>
+
+
+    </div>
+</div>
+
+
+
+
+
 
 </body>
 </html>

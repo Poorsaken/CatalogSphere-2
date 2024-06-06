@@ -115,8 +115,8 @@
             <label for="product_desc">Product Description:</label>
             <input type="text" id="product_desc" name="product_desc" class="product_desc" required><br><br>
             <!-- this for new insert image file -->
-            <label for="product_image">Insert Image:</label>
-            <input type="file" id="product_image" name="product_image" class="product_desc" required><br>
+            <label for="image">Insert Image:</label>
+            <input type="file" id="product_image" name="product_image" class="" required><br>
             <button name="btn" id="btn" class="submit_btn">SUBMIT</button>
           </div>
         </div>
