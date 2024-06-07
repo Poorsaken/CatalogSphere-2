@@ -9,10 +9,13 @@
 <body>
     <?php include('./routes/router.php'); ?>
     <div class="parents">
-        <div class="logo" onclick="ToCustomerProducts()">
+        <div class="logo" onclick="ToCustomerLandingPage()">
             <h1>CatalogSphere</h1>
         </div>
 
+        <div class="navlinks">
+            <a onclick="ToCustomerBuyProduct()"> All items </a>
+        </div>
         <div class="navlinks">
             <a onclick="ViewOrderStatus()">Pending Orders</a>
         </div>

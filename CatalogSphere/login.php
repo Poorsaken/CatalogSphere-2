@@ -44,7 +44,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             if ($username === "A9v%r5M3") {
                 header("Location: welcome.php");
             } else {
-                header("Location: userbuyproduct.php");
+                header("Location: userwelcome.php");
             }
             exit();
         } else {

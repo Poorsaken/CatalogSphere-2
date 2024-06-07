@@ -1,0 +1,71 @@
+*{
+
+
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+
+.carduser-container{
+
+    width: 300px;
+    height: 400px;
+
+    background-color: rgb(255, 255, 255);
+}
+
+.img {
+
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+
+}
+
+.information{
+
+
+    padding: 5%;
+}
+
+.model{
+
+
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.brand , .color{
+
+
+    color: gray;
+    font-size: 14px;
+}
+
+.price{
+
+
+    font-size: 17px;
+    font-weight: 500;
+    
+}
+
+
+
+.buy{
+
+    width: 150px;
+    height: 40px;
+    background-color: pink;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.flex{ 
+
+ 
+     display: flex;
+  justify-content: space-evenly;
+}

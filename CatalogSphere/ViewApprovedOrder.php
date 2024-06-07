@@ -3,13 +3,10 @@
 session_start();
 include('./routes/router.php');
 
-
-        
+   
 if(isset($_SESSION['id']) && isset($_SESSION['username'])){
 ?>
 
-
-   
 <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -17,7 +14,8 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Document</title>
             <!-- <link rel="stylesheet" href  = "./css/allproduct.css" />  -->
-            <link rel="stylesheet" href  = "./css/buyproduct.css" /> 
+
+<link rel="stylesheet" href="./css/allproducts.css"/>
         </head>
         <body>
 
@@ -35,26 +33,9 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
                 </div>
                     
                 </div>
-                <table class="product-table">
-                <thead>
-                    <tr>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Brand</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Model</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Chipset</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">RAM</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Storage</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Display Size</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Resolution</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">USB</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Battery</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">OS</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Price</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Color</th>
-                        <th style="background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">Description</th>
-                    
-                    </tr>
-                </thead>
-                <tbody>
+                 <div class="product-list">
+               
+                
                     <?php
                     include('./classes/Crud.php');
                     include('./Classes/Database.php');
@@ -67,31 +48,56 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
                     $products = $obj->GetAllApprovedOrder();
 
                     // Display the products
-                    foreach ($products as $index => $product) {
-                        $rowStyle = $index % 2 == 0 ? 'background-color:;' : '';
-                        echo "<tr style='{$rowStyle}'>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['brand']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['model']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['chipset']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['ram']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['storage']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['display_size']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['resolution']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['usb']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['battery']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['os']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['price']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['color']}</td>";
-                        echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$product['product_desc']}</td>";
-                        echo "</tr>";
+                   foreach ($products as $index => $product) {
+
+                        echo "<div class='card'>";
+                        echo "<div class='header-container'>";
+                        echo "<div class='left-container'>";
+                        // Display product image
+                        $imagePath = "uploaded_image/{$product['product_image']}";
+                        echo "<div class='card-image'><img src='{$imagePath}' alt='{$product['model']}' style='width: 100%; height: 100%; object-fit: cover;'></div>";
+
+                        echo "</div>";
+                        echo "<div class='right-container'>";
+                        echo "<div class='card-model'><strong>{$product['model']}</strong></div>";
+                        echo "<div class='card-brand'>{$product['brand']}</div>";
+                        echo "<div class='card-price'>{$product['price']}</div>";
+                        echo "<p>Color: {$product['color']}</p>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "<div class='specs_container'>";
+
+                        echo "<div class='specss'>";
+                        echo "<p class='card-enc'>{$product['chipset']}</p>";
+                        echo "<p class='card-enc'>{$product['ram']}</p>";
+                        echo "<p class='card-enc'>{$product['storage']}</p>";
+                        echo "<p class='card-enc'>{$product['display_size']}</p>";
+                        echo "<p class='card-enc'>{$product['resolution']}</p>";
+                        echo "</div>";
+
+                        echo "<div class='specss'>";
+                        echo "<p class='card-enc'>{$product['refresh_rate']}</p>";
+                        echo "<p class='card-enc'>{$product['connectivity']}</p>";
+                        echo "<p class='card-enc'>{$product['price']}</p>";
+                        echo "<p class='card-enc'>{$product['os']}</p>";
+                        echo "</div>";
+
+                        echo "</div>";
+                        echo "<div class='title_description'>Description: </div>";
+                        echo "<p class='card-description'>{$product['product_desc']}</p>";
+                        echo "<div class='buy_container'>";
+                        // Form starts here
+                     
+                        echo "</div>";
+                        echo "</div>";
                     }
                     ?>
-                </tbody>
-                </table>
+              
 
       
-            </div> 
-    
+            
+              </div> 
+              </div> 
 </div>
             
         

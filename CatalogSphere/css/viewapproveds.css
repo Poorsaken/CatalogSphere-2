@@ -10,8 +10,38 @@
    
 }
 
+
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Optional: Adds space between the cards */
+}
+
+.carduser-container {
+    flex: 1 1 300px; /* Allows the cards to be flexible with a minimum width of 300px */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(204, 204, 204, 0.1);
+    margin: 10px;
+    max-width: 300px; /* Optional: Ensures the card does not grow too large */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 body{
-    background-color: #F7F2FF;
+    background-color: #f4e8ff;
 
 
 }
@@ -20,7 +50,7 @@ body{
 
 
     display: flex;
-    flex-direction: row;
+    
 }
 
 .left_container{
@@ -36,6 +66,8 @@ body{
 
 
     width: 98%;
+    display: flex;
+   
 
 
 }
@@ -45,6 +77,7 @@ body{
 
 
     display: flex;
+
 }
 
 .container{
@@ -55,7 +88,26 @@ body{
 
 }
 
+form{
 
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 15%;
+}
+
+.space{
+
+    width: 10px;
+
+}
+
+.product-list{
+
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .description{
 

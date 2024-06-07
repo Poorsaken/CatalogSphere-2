@@ -267,6 +267,30 @@ function insertProduct($req, $files) {
                 $stmt->bindParam(':product_image', $fileName);
                 $stmt->execute();
                 
+                $sql = "INSERT INTO tbl_allproduct 
+                        (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc, product_image)
+                        VALUES 
+                        (:brand, :model, :chipset, :ram, :storage, :display_size, :resolution, :refresh_rate, :connectivity, :usb, :battery, :os, :price, :color, :product_desc, :product_image)";
+
+                $stmt = $con->prepare($sql);
+                $stmt->bindParam(':brand', $brand);
+                $stmt->bindParam(':model', $model);
+                $stmt->bindParam(':chipset', $chipset);
+                $stmt->bindParam(':ram', $ram);
+                $stmt->bindParam(':storage', $storage);
+                $stmt->bindParam(':display_size', $display_size);
+                $stmt->bindParam(':resolution', $resolution);
+                $stmt->bindParam(':refresh_rate', $refresh_rate);
+                $stmt->bindParam(':connectivity', $connectivity);
+                $stmt->bindParam(':usb', $usb);
+                $stmt->bindParam(':battery', $battery);
+                $stmt->bindParam(':os', $os);
+                $stmt->bindParam(':price', $price);
+                $stmt->bindParam(':color', $color);
+                $stmt->bindParam(':product_desc', $product_desc);
+                $stmt->bindParam(':product_image', $fileName);
+                $stmt->execute();
+                
                 echo "The product has been inserted successfully.";
             } catch (PDOException $e) {
                 echo "Error: " . $e->getMessage();
@@ -376,9 +400,9 @@ function RemoveRowFromTableById($req){
         if ($product) {
             // Insert product details into tbl_deletedproducts
             $sql = "INSERT INTO tbl_approved
-                    (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc)
+                    (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc, product_image)
                     VALUES
-                    ('{$product['brand']}', '{$product['model']}', '{$product['chipset']}', '{$product['ram']}', '{$product['storage']}', '{$product['display_size']}', '{$product['resolution']}', '{$product['refresh_rate']}', '{$product['connectivity']}', '{$product['usb']}', '{$product['battery']}', '{$product['os']}', '{$product['price']}', '{$product['color']}', '{$product['product_desc']}')";
+                    ('{$product['brand']}', '{$product['model']}', '{$product['chipset']}', '{$product['ram']}', '{$product['storage']}', '{$product['display_size']}', '{$product['resolution']}', '{$product['refresh_rate']}', '{$product['connectivity']}', '{$product['usb']}', '{$product['battery']}', '{$product['os']}', '{$product['price']}', '{$product['color']}', '{$product['product_desc']}', '{$product['product_image']}')";
             $con->exec($sql);
 
             // Delete the product from tbl_products
@@ -465,9 +489,9 @@ function InsertBuyProduct($product_id){
         if ($product) {
             // Insert product details into tbl_buyproduct
             $sql = "INSERT INTO tbl_buyproduct
-                    (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc, status)
+                    (brand, model, chipset, ram, storage, display_size, resolution, refresh_rate, connectivity, usb, battery, os, price, color, product_desc, status, product_image)
                     VALUES
-                    (:brand, :model, :chipset, :ram, :storage, :display_size, :resolution, :refresh_rate, :connectivity, :usb, :battery, :os, :price, :color, :product_desc, :status)";
+                    (:brand, :model, :chipset, :ram, :storage, :display_size, :resolution, :refresh_rate, :connectivity, :usb, :battery, :os, :price, :color, :product_desc, :status ,:product_image)";
             $stmt = $con->prepare($sql);
             $stmt->bindParam(':brand', $product['brand']);
             $stmt->bindParam(':model', $product['model']);
@@ -484,6 +508,7 @@ function InsertBuyProduct($product_id){
             $stmt->bindParam(':price', $product['price']);
             $stmt->bindParam(':color', $product['color']);
             $stmt->bindParam(':product_desc', $product['product_desc']);
+            $stmt->bindParam(':product_image', $product['product_image']);
             $stmt->bindParam(':status', $status);  // Use the "pending" status
             $stmt->execute();
 

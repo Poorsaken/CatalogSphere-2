@@ -59,7 +59,11 @@
 
             window.location.href = 'updateproducts.php';
         }
-        function ToCustomerProducts(){
+        function ToCustomerLandingPage(){
+
+            window.location.href = 'userwelcome.php';
+        }
+        function ToCustomerBuyProduct(){
 
             window.location.href = 'userbuyproduct.php';
         }

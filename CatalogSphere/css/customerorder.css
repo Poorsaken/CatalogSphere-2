@@ -1,0 +1,18 @@
+*{
+
+
+    width: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+
+.left_container{
+
+    width: 300p;
+}
+.div_right{
+
+
+    display:  flex;
+}
